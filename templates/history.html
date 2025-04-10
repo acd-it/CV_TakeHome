@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport settings to ensure proper rendering across devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page that appears on the browser tab -->
+    <title>Weather History</title>
+    
+    <!-- Including Bootstrap CSS for styling the page using a CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar with Bootstrap classes for layout and styling -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <!-- Website title in the navbar with a link to the home page -->
+            <a class="navbar-brand" href="/">Weather Dashboard</a>
+            
+            <!-- Hamburger menu for small screens, expands into a full menu on large screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Collapsible menu items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- Link to the home page -->
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Link to the weather history page (active link on the current page) -->
+                        <a class="nav-link active" href="/history">History</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content area -->
+    <div class="container mt-4">
+        <div class="card">
+            <!-- Card header with title for the weather history section -->
+            <div class="card-header">
+                <h2>Weather History</h2>
+            </div>
+            <div class="card-body">
+                <!-- Table to display the weather history data -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <!-- Table header with column names -->
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>City</th>
+                                <th>Temperature (°C)</th>
+                                <th>Temperature (°F)</th>
+                                <th>Humidity (%)</th>
+                                <th>Wind Speed (m/s)</th>
+                                <th>Description</th>
+                                <th>Comfort Index</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loop through all the records and display them in rows -->
+                            {% for record in records %}
+                            <tr>
+                                <!-- Display each data point from the record -->
+                                <td>{{ record.timestamp }}</td>
+                                <td>{{ record.city }}</td>
+                                <!-- Check if temperature in Celsius is available before displaying it -->
+                                <td>{{ "%.2f"|format(record.temperature_celsius) if record.temperature_celsius is not none }}</td>
+                                <!-- Check if temperature in Fahrenheit is available before displaying it -->
+                                <td>{{ "%.2f"|format(record.temperature_fahrenheit) if record.temperature_fahrenheit is not none }}</td>
+                                <!-- Display humidity, or 'N/A' if the data is missing -->
+                                <td>{{ record.humidity if record.humidity is not none else 'N/A' }}</td>
+                                <!-- Display wind speed, or 'N/A' if the data is missing -->
+                                <td>{{ record.wind_speed if record.wind_speed is not none else 'N/A' }}</td>
+                                <!-- Display weather description -->
+                                <td>{{ record.weather_description }}</td>
+                                <!-- Check if comfort index is available before displaying it -->
+                                <td>{{ "%.2f"|format(record.comfort_index) if record.comfort_index is not none else 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Including Bootstrap JS bundle for interactive elements like collapsible menu -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
