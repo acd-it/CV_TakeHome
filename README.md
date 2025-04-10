@@ -109,7 +109,3 @@ If more time was available, the following features could be added:
 -   **Geolocation**: Add an option to get weather for the user's current location using the browser's Geolocation API.
 -   **Improved UI/UX**: Enhance the visual design and user experience further.
 -   **Unit/Integration Tests**: Add comprehensive tests for backend logic and API interactions.
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details.
